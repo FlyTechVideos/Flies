@@ -11,6 +11,8 @@ Flies.exe options:
 
 To close it, simply press Alt+F4. Alternatively, you can also just kill the `Flies.exe` process. But do you really wanna kill the flies?!?
 
+Fly picture shot by [Hafiz Issadeen](https://www.flickr.com/photos/yimhafiz/2547531809). It is licensed under [CC-BY 2.0](https://creativecommons.org/licenses/by/2.0/).
+
 How to contribute:
 - Fork the project
 - Clone your forked project
