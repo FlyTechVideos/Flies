@@ -7,11 +7,13 @@ namespace Flies
 {
     class Fly
     {
-        private Random random;
+        static private double defaultXDelta = 7;
+        static private double defaultYDelta = 7;
 
-        private double xDelta = 7;
+        private Random random;
+        private double xDelta = defaultXDelta;
         private int counter = 0;
-        private double yDelta = 7;
+        private double yDelta = defaultYDelta;
         private double currentX = 0;
         private double currentY = 0;
         private double currentRotationAngle = 0;
@@ -114,90 +116,40 @@ namespace Flies
         {
             if (isCursorTouching() && counter == 0)
             {
-                if (xDelta < 0)
-                {
-                    xDelta -= d;
-                }
-                if (xDelta > 0)
-                {
-                    xDelta += d;
-                }
-                if (yDelta < 0)
-                {
-                    yDelta -= d;
-                }
-                if (yDelta > 0)
-                {
-                    yDelta += d;
-                }
-                counter++;
+                yDelta += d * Math.Sign(yDelta);
+                xDelta += d * Math.Sign(xDelta);
             }
-            if (counter > 0)
+            else if (counter == 61)
             {
-                counter++;
-                if (counter == 61)
-                {
-                    counter = 0;
-                    if (yDelta > 0)
-                    {
-                        yDelta = 7;
-                    }
-                    if (yDelta < 0)
-                    {
-                        yDelta = -7;
-                    }
-                    if (xDelta > 0)
-                    {
-                        xDelta = 7;
-                    }
-                    if (xDelta < 0)
-                    {
-                        xDelta = -7;
-                    }
-                }
+                counter = 0;
+                yDelta = defaultYDelta * Math.Sign(yDelta);
+                xDelta = defaultXDelta * Math.Sign(xDelta);
             }
+            counter++;
         }
 
         private bool isCursorTouching()
         {
-            bool X = false;
-            bool Y = false;
-            //x
-            if (Cursor.Position.X < currentX)
+            bool touchedX = false;
+            bool touchedY = false;
+            if (Cursor.Position.X < currentX && currentX - Cursor.Position.X < 50)
             {
-                if(currentX - Cursor.Position.X < 50)
-                {
-                    X = true;
-                }
+                touchedX = true;
             }
-            if (Cursor.Position.X > currentX)
+            if (Cursor.Position.X > currentX && Cursor.Position.X - currentX < 50)
             {
-                if (Cursor.Position.X - currentX < 50)
-                {
-                    X = true;
-                }
+                touchedX = true;
             }
-            //y
-            if (Cursor.Position.Y < currentY)
+            if (Cursor.Position.Y < currentY && Cursor.Position.Y < 50)
             {
-                if (currentY - Cursor.Position.Y < 50)
-                {
-                    Y = true;
-                }
+                touchedY = true;
             }
-            if (Cursor.Position.Y > currentY)
+            if (Cursor.Position.Y > currentY && Cursor.Position.Y - currentY < 50)
             {
-                if (Cursor.Position.Y - currentY < 50)
-                {
-                    Y = true;
-                }
+                touchedY = true;
             }
-            //final check
-            if(X && Y)
-            {
-                return true;
-            }
-            return false;
+            return touchedX && touchedY;
+            
         }
         private bool collidesWithY()
         {
