@@ -7,6 +7,7 @@ namespace Flies
 {
     class Fly
     {
+        private static int flyScaredTime = 2 * 30;
         static private double defaultXDelta = 7;
         static private double defaultYDelta = 7;
 
@@ -119,7 +120,7 @@ namespace Flies
                 yDelta += d * Math.Sign(yDelta);
                 xDelta += d * Math.Sign(xDelta);
             }
-            else if (counter == 61)
+            else if (counter == flyScaredTime)
             {
                 counter = 0;
                 yDelta = defaultYDelta * Math.Sign(yDelta);
