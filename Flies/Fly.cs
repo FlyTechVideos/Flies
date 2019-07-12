@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Windows;
+using System.Windows.Forms;
+using FlowDirection = System.Windows.FlowDirection;
 
 namespace Flies
 {
@@ -8,6 +10,7 @@ namespace Flies
         private Random random;
 
         private double xDelta = 7;
+        private int counter = 0;
         private double yDelta = 7;
         private double currentX = 0;
         private double currentY = 0;
@@ -56,6 +59,52 @@ namespace Flies
 
             currentX += xDelta * getXModifier();
             currentY += yDelta * getYModifier();
+
+            if (isCursorTouching() && counter == 0)
+            {
+                if(xDelta < 0)
+                {
+                    xDelta -= 70;
+                }
+                if (xDelta > 0)
+                {
+                    xDelta += 70;
+                }
+                if (yDelta < 0)
+                {
+                    yDelta -= 70;
+                }
+                if (yDelta > 0)
+                {
+                    yDelta += 70;
+                }
+                counter++;
+            }
+            if (counter > 0)
+            {
+                counter++;
+                if (counter == 61)
+                {
+                    counter = 0;
+                    if(yDelta > 0)
+                    {
+                        yDelta = 7;
+                    }
+                    if (yDelta < 0)
+                    {
+                        yDelta = -7;
+                    }
+                    if (xDelta > 0)
+                    {
+                        xDelta = 7;
+                    }
+                    if (xDelta < 0)
+                    {
+                        xDelta = -7;
+                    }
+                }
+            }
+            Console.WriteLine(isCursorTouching());
         }
 
         private void adaptAngle()
@@ -106,6 +155,47 @@ namespace Flies
             return currentX + xDelta < 0 || currentX + xDelta + imageWidth > canvasWidth;
         }
 
+        private bool isCursorTouching()
+        {
+            bool X = false;
+            bool Y = false;
+            //x
+            if (Cursor.Position.X < currentX)
+            {
+                if(currentX - Cursor.Position.X < 50)
+                {
+                    X = true;
+                }
+            }
+            if (Cursor.Position.X > currentX)
+            {
+                if (Cursor.Position.X - currentX < 50)
+                {
+                    X = true;
+                }
+            }
+            //y
+            if (Cursor.Position.Y < currentY)
+            {
+                if (currentY - Cursor.Position.Y < 50)
+                {
+                    Y = true;
+                }
+            }
+            if (Cursor.Position.Y > currentY)
+            {
+                if (Cursor.Position.Y - currentY < 50)
+                {
+                    Y = true;
+                }
+            }
+            //final check
+            if(X && Y)
+            {
+                return true;
+            }
+            return false;
+        }
         private bool collidesWithY()
         {
             if (yDelta < 0)
