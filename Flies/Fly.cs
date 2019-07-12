@@ -60,51 +60,7 @@ namespace Flies
             currentX += xDelta * getXModifier();
             currentY += yDelta * getYModifier();
 
-            if (isCursorTouching() && counter == 0)
-            {
-                if(xDelta < 0)
-                {
-                    xDelta -= 70;
-                }
-                if (xDelta > 0)
-                {
-                    xDelta += 70;
-                }
-                if (yDelta < 0)
-                {
-                    yDelta -= 70;
-                }
-                if (yDelta > 0)
-                {
-                    yDelta += 70;
-                }
-                counter++;
-            }
-            if (counter > 0)
-            {
-                counter++;
-                if (counter == 61)
-                {
-                    counter = 0;
-                    if(yDelta > 0)
-                    {
-                        yDelta = 7;
-                    }
-                    if (yDelta < 0)
-                    {
-                        yDelta = -7;
-                    }
-                    if (xDelta > 0)
-                    {
-                        xDelta = 7;
-                    }
-                    if (xDelta < 0)
-                    {
-                        xDelta = -7;
-                    }
-                }
-            }
-            Console.WriteLine(isCursorTouching());
+            speedUpFly(70);
         }
 
         private void adaptAngle()
@@ -153,6 +109,53 @@ namespace Flies
         private bool collidesWithX()
         {
             return currentX + xDelta < 0 || currentX + xDelta + imageWidth > canvasWidth;
+        }
+        private void speedUpFly(int d)
+        {
+            if (isCursorTouching() && counter == 0)
+            {
+                if (xDelta < 0)
+                {
+                    xDelta -= d;
+                }
+                if (xDelta > 0)
+                {
+                    xDelta += d;
+                }
+                if (yDelta < 0)
+                {
+                    yDelta -= d;
+                }
+                if (yDelta > 0)
+                {
+                    yDelta += d;
+                }
+                counter++;
+            }
+            if (counter > 0)
+            {
+                counter++;
+                if (counter == 61)
+                {
+                    counter = 0;
+                    if (yDelta > 0)
+                    {
+                        yDelta = 7;
+                    }
+                    if (yDelta < 0)
+                    {
+                        yDelta = -7;
+                    }
+                    if (xDelta > 0)
+                    {
+                        xDelta = 7;
+                    }
+                    if (xDelta < 0)
+                    {
+                        xDelta = -7;
+                    }
+                }
+            }
         }
 
         private bool isCursorTouching()
