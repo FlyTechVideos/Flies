@@ -117,8 +117,10 @@ namespace Flies
         {
             if (isCursorTouching() && counter == 0)
             {
-                yDelta += d * Math.Sign(yDelta);
-                xDelta += d * Math.Sign(xDelta);
+                yDelta = d * Math.Sign(yDelta);
+                xDelta = d * Math.Sign(xDelta);
+
+                counter = 1;
             }
             else if (counter == flyScaredTime)
             {
@@ -126,7 +128,10 @@ namespace Flies
                 yDelta = defaultYDelta * Math.Sign(yDelta);
                 xDelta = defaultXDelta * Math.Sign(xDelta);
             }
-            counter++;
+            else if (counter > 0)
+            {
+                counter++;
+            }
         }
 
         private bool isCursorTouching()
