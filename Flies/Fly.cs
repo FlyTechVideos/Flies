@@ -131,25 +131,15 @@ namespace Flies
 
         private bool isCursorTouching()
         {
-            bool touchedX = false;
-            bool touchedY = false;
-            if (Cursor.Position.X < currentX && currentX - Cursor.Position.X < 50)
-            {
-                touchedX = true;
-            }
-            if (Cursor.Position.X > currentX && Cursor.Position.X - currentX < 50)
-            {
-                touchedX = true;
-            }
-            if (Cursor.Position.Y < currentY && Cursor.Position.Y < 50)
-            {
-                touchedY = true;
-            }
-            if (Cursor.Position.Y > currentY && Cursor.Position.Y - currentY < 50)
-            {
-                touchedY = true;
-            }
-            return touchedX && touchedY;
+            bool isNearLeft = Cursor.Position.X < currentX && currentX - Cursor.Position.X < 50;
+            bool isNearRight = Cursor.Position.X > currentX && Cursor.Position.X - currentX < 50;
+            bool isNearBottom = Cursor.Position.Y < currentY && currentY - Cursor.Position.Y < 50;
+            bool isNearTop = Cursor.Position.Y > currentY && Cursor.Position.Y - currentY < 50;
+
+            bool nearX = isNearLeft || isNearRight;
+            bool nearY = isNearTop || isNearBottom;
+
+            return nearX && nearY;
             
         }
         private bool collidesWithY()
