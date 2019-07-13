@@ -1,14 +1,20 @@
 ﻿using System;
 using System.Windows;
+using System.Windows.Forms;
+using FlowDirection = System.Windows.FlowDirection;
 
 namespace Flies
 {
     class Fly
     {
-        private Random random;
+        private static int flyScaredTime = 2 * 30;
+        static private double defaultXDelta = 7;
+        static private double defaultYDelta = 7;
 
-        private double xDelta = 7;
-        private double yDelta = 7;
+        private Random random;
+        private double xDelta = defaultXDelta;
+        private int counter = 0;
+        private double yDelta = defaultYDelta;
         private double currentX = 0;
         private double currentY = 0;
         private double currentRotationAngle = 0;
@@ -56,6 +62,8 @@ namespace Flies
 
             currentX += xDelta * getXModifier();
             currentY += yDelta * getYModifier();
+
+            speedUpFly(70);
         }
 
         private void adaptAngle()
@@ -105,7 +113,40 @@ namespace Flies
         {
             return currentX + xDelta < 0 || currentX + xDelta + imageWidth > canvasWidth;
         }
+        private void speedUpFly(int d)
+        {
+            if (isCursorTouching() && counter == 0)
+            {
+                yDelta = d * Math.Sign(yDelta);
+                xDelta = d * Math.Sign(xDelta);
 
+                counter = 1;
+            }
+            else if (counter == flyScaredTime)
+            {
+                counter = 0;
+                yDelta = defaultYDelta * Math.Sign(yDelta);
+                xDelta = defaultXDelta * Math.Sign(xDelta);
+            }
+            else if (counter > 0)
+            {
+                counter++;
+            }
+        }
+
+        private bool isCursorTouching()
+        {
+            bool isNearLeft = Cursor.Position.X < currentX && currentX - Cursor.Position.X < 50;
+            bool isNearRight = Cursor.Position.X > currentX && Cursor.Position.X - currentX < 50;
+            bool isNearBottom = Cursor.Position.Y < currentY && currentY - Cursor.Position.Y < 50;
+            bool isNearTop = Cursor.Position.Y > currentY && Cursor.Position.Y - currentY < 50;
+
+            bool nearX = isNearLeft || isNearRight;
+            bool nearY = isNearTop || isNearBottom;
+
+            return nearX && nearY;
+            
+        }
         private bool collidesWithY()
         {
             if (yDelta < 0)
