@@ -11,7 +11,7 @@
         AllowsTransparency="True"
         Topmost="True"
         Background="Transparent"
-        Title="the_flies"
+        Title="MainWindow"
         Loaded="Window_Loaded" ShowInTaskbar="True">
     <Canvas Name="FullscreenCanvas">
     </Canvas>
