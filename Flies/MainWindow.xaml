@@ -12,7 +12,7 @@
         Topmost="True"
         Background="Transparent"
         Title="MainWindow"
-        Loaded="Window_Loaded" ShowInTaskbar="False">
+        Loaded="Window_Loaded" ShowInTaskbar="True">
     <Canvas Name="FullscreenCanvas">
     </Canvas>
 </Window>
