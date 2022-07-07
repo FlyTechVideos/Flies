@@ -35,6 +35,11 @@ namespace Flies
             this.imageHeight = imageHeight;
         }
 
+        public void speedup(public int speedfactor)
+        {
+            xDelta*= speedfactor
+            yDelta*= speedfactor
+            }
         public void move()
         {
             if (collidesWithX())
