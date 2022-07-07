@@ -39,6 +39,7 @@ namespace Flies
         {
             xDelta*= speedfactor
             yDelta*= speedfactor
+            }
         public void move()
         {
             if (collidesWithX())
